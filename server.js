@@ -10,6 +10,10 @@ const crypto = require("crypto");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+// Render / Netlify ada di belakang proxy HTTPS. Tanpa ini, express-session mengira koneksi
+// bukan HTTPS dan TIDAK mengirim cookie "secure" -> login OAuth ga pernah nyangkut.
+app.set("trust proxy", 1);
+
 // ─── Asset types yang didukung ────────────────────────────────────────────────
 // Roblox Assets API: Animation & Model menerima .rbxm / .rbxmx (content-type model/x-rbxm).
 const ASSET_TYPES = {
